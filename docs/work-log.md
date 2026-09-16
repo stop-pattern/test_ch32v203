@@ -23,3 +23,16 @@
 - 保存単位: `document autonomous development workflow`。ソースとplatformio.iniは変更しない。ビルド、書込み、実機デバッグは文書変更に不要なため未実施。
 - 限界: 文書の構造・整合性と分担編集を確認した範囲であり、T-25の実地再開、実エラー修正、無人実機サイクルは未実施。ファームウェアの未決事項を解消したとは扱わない。
 - 引継ぎ: 子エージェントの作業とファイル所有は終了。ビルド/モニタ/デバッグの継続プロセスなし。次の仕様検討と実装開始条件はprogressを参照する。
+
+## 2026-09-17 / DOC-STYLE-01 / コーディング規約の照合
+
+- 入力: Google C++ Style Guide採用、4スペース、関数・クラス・構造体の宣言へのDoxygen必須、組み込み不要部分の除外。既存コードの適合化は後日とし、衝突点は採用する側を確認してから文書へ反映する指示。
+- 基準: `ab0dffb`、開始時の作業ツリーはクリーン。
+- 調査方法: Google公式ページを参照し、`rg`でAGENTS/docs/skillsと現コードの規約関連記述を検索。`coding_rules_audit`へ既存文書のread-only監査を委譲し、完了報告を受領した。
+- 外部根拠: [Google C++ Version](https://google.github.io/styleguide/cppguide.html#C++_Version)は現在C++20、[Self-contained Headers](https://google.github.io/styleguide/cppguide.html#Self_contained_Headers)は.hを指定。既存R-22等のC++17とarchitectureの設定ヘッダ.hppには採用判断が必要。
+- 文書上の競合: AGENTSの`existing local formatting`はGoogle基準へ整理が必要。O-21は命名・整形・コメントの詳細を未決としている。
+- 記述の拡張: 現在のDoxygen要件は関数のみ。クラス・構造体の宣言も対象にすることはユーザーが明示済み。
+- 互換な制約と確認点: ヒープ・例外・RTTI禁止は組み込み向け制約として維持可能。上流SDK/CANopenNodeのC・無改変を維持し、ISR属性やABI名等を例外化する範囲を提案した。Google固有ライブラリ/OS向け機能の推奨を対象外にする案であり、既存コード削除の提案ではない。
+- 質問: 言語版、拡張子と書式、組み込み適用範囲の3点を提示。回答前に現行の規範文書を採用変更しない。
+- 結果/次の行動: 調査完了・回答待ち。今回はprogressと本記録のみ保存。回答後に関連文書を統合更新し、O-21の確定部分とツール導入等の残件を分ける。
+- 操作範囲: コード・設定の変更、ビルド、書込み、デバッグ接続は実施していない。
