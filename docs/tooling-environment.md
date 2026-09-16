@@ -1,10 +1,10 @@
 # PlatformIO・スキル環境の確認記録
 
-確認日: 2026-09-17。対象コード: `8204e82`時点の既存点滅サンプル。新しいファームウェア機能の実装・実機書き込みは行っていない。
+確認日: 2026-09-17。ビルド確認対象: `8204e82`時点の既存点滅サンプル。スキルの利用可能一覧への掲載も同日確認した。新しいファームウェア機能の実装・実機書き込みは行っていない。
 
 ## pioの利用可否
 
-現在のPowerShellでは`Get-Command pio,platformio`で実行ファイルを解決できなかった。Coreはインストール済みで、以下のフルパスから起動・ビルドできる。
+環境整備時のPowerShellでは`Get-Command pio,platformio`で実行ファイルを解決できなかった。Coreはインストール済みで、以下のフルパスから起動・ビルドできることを確認した。作業再開時にはスキルのCLI検出手順で、その時点の環境を再確認する。
 
 ```powershell
 & "${env:USERPROFILE}\.platformio\penv\Scripts\pio.exe" --version
@@ -31,11 +31,11 @@ PATHやPowerShellプロファイルの恒久変更、Coreの追加インスト�
 - この環境への導入先: `${env:USERPROFILE}\.codex\skills\ch32v203-platformio\`
 - 明示呼出し名: `$ch32v203-platformio`
 
-`CODEX_HOME`が未設定なのでユーザー既定のスキル領域へ配置した。新しいセッションで発見される構成とし、現在のセッションのスキル一覧への即時反映は未確認。一覧にまだ出ない場合も、原本の`SKILL.md`を指定して手順を参照できる。
+`CODEX_HOME`が未設定なのでユーザー既定のスキル領域へ配置した。現在の利用可能スキル一覧に`ch32v203-platformio`と導入先の`SKILL.md`が掲載されている。別セッションで一覧に出ない場合は原本と配置先を確認し、原本の`SKILL.md`を指定して手順を参照する。
 
 原本と導入先は同じ内容とし、変更時には両者を同期して検証する。別環境では、その環境の`CODEX_HOME/skills`、未設定ならユーザーの`.codex/skills`へスキルフォルダを配置する。既存の同名スキルがある場合は内容を確認してから更新する。
 
-`skill-creator`の方針に従い、入口にはCLI解決と作業範囲、参照文書には環境別のビルド・WCH-Link・USB ISP手順を分離した。対象未特定時の扱いと失敗時の終了条件も記載した。
+`skill-creator`の方針に従い、入口にはCLI解決と作業範囲、参照文書には環境別のビルド・WCH-Link・USB ISP手順を分離した。対象未特定時の扱いと失敗時の終了条件も記載した。長期開発の目標管理、許可範囲、失敗解析、再試行、subagentの分担は [development-workflow.md](development-workflow.md) を正本とし、スキルは各操作の手順として利用する。
 
 原本・導入先の両方で`skill-creator/scripts/quick_validate.py`が成功した。両ファイルのSHA-256一致を確認し、SKILL.md内のCLI解決ブロックを実行してCore 6.2.0と`run --help`の正常終了を確認した。Windowsの文字コード差を避けるため、Python検証は`python -X utf8`で実行した。
 
@@ -55,6 +55,12 @@ PATHやPowerShellプロファイルの恒久変更、Coreの追加インスト�
 | evt_isp | 1428 byte | 2076 byte | HSE + PLL、144 MHz |
 
 これらは既存サンプルに対するPlatformIOの表示値であり、将来ファームウェアの容量見積りや実行中のスタック高水位ではない。生成物は`.pio/build/<環境>/`にありGit管理対象外。ISP環境のビルド成功は、ISP書き込み成功を意味しない。
+
+## 継続開発での記録と共有資源
+
+各操作の実行条件・終了状態・ログ、ソースと生成物の識別、書込み先の確認は [development-workflow.md](development-workflow.md) に従って記録する。現在の担当、次の操作、稼働プロセスと資源所有権は [progress.md](progress.md)、反復ごとの観測と結果は [work-log.md](work-log.md) を参照する。詳細ログの保存場所と保持方針も開発手順へ集約する。
+
+ビルド出力、WCH-Link/OpenOCD、USB ISP、シリアルモニター、ボードは共有資源として扱う。並列作業では開発手順の所有権ルールに従い、別agentが使用中の出力領域へ書き込んだり、同一ポート・プローブを同時に開いたりしない。過去のCOM番号やビルド結果を現在の接続先・生成物の識別に流用しない。
 
 ## 実機・試験の確認範囲
 

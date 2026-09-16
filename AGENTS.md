@@ -1,29 +1,33 @@
 # Repository Guidelines
 
-## Project Structure & Module Organization
+## Start and Resume
 
-This repository is a PlatformIO firmware project for the WCH CH32V203 MCU using the `noneos-sdk` framework. Application code lives in `src/`; the current entry point is `src/main.c`. Put shared project headers in `include/` and reusable, project-specific libraries in `lib/<library_name>/`. Add PlatformIO unit tests under `test/`, preferably one subdirectory per feature. Build artifacts are generated in `.pio/` and must remain untracked. Board, upload, debug, and serial settings are defined in `platformio.ini`.
+Read [progress](docs/progress.md), [development workflow](docs/development-workflow.md), and the relevant specifications before acting. Check Git status, delegated work, and actual process/device state; a stale checkpoint is not proof that a process is running. Firmware implementation remains gated by the user's implementation instruction and resolved prerequisites in [implementation plan](docs/implementation-plan.md).
 
-## Build, Test, and Development Commands
+## Autonomous Development
 
-Run commands from the repository root with PlatformIO Core installed:
+For an authorized goal, define scope and measurable acceptance criteria, then autonomously repeat planning, implementation, tests/builds, error analysis, fixes, rebuilds, authorized upload, log capture, and debugging until acceptance is evidenced. Do not ask again for already granted authority. Unresolved product decisions or new scope require user input; continue independent in-scope work meanwhile. Create a tool-managed goal only when explicitly requested, and follow the goal tool's lifecycle rules.
 
-- `pio run` builds the default `generic` environment (`genericCH32V203C8T6`).
-- `pio run -e evt` builds for the CH32V203C8T6 EVT R0 board.
-- `pio run -t upload` builds and flashes with WCH-Link.
-- `pio run -e generic_isp -t upload` flashes the generic board through ISP; use `evt_isp` for the EVT board.
-- `pio device monitor -b 115200` opens the configured serial monitor.
-- `pio test -e generic` runs tests placed under `test/`.
-- `pio run -t clean` removes generated build output.
+Persist every meaningful finding, failed attempt, command/result, pending operation, and next action promptly in [work log](docs/work-log.md) and the current checkpoint. Checkpoint before long operations, delegation, context handoff, and turn completion. Do not rely on conversation memory or claim required unperformed HIL as complete.
 
-## Coding Style & Naming Conventions
+## Parallel Work
 
-Write C consistent with `src/main.c`: four-space indentation, braces on the same line for functions and control statements, and one declaration or operation per line. Use `UPPER_SNAKE_CASE` for macros and hardware constants, `PascalCase` only where required by SDK types, and descriptive `camelCase` for local variables. Keep interrupt handlers small and preserve the WCH interrupt attributes. Include vendor headers with angle brackets and project headers with quotes. No formatter or linter is configured, so review formatting as part of each change.
+Actively delegate bounded read-only investigation, error analysis, and review. Also parallelize implementation, tests, and documentation when responsibilities are independent. Assign file ownership, inputs, deliverables, and acceptance criteria. The coordinator owns shared progress files, integration, and Git index/commits. Serialize shared build directories, source snapshots, boards, probes, and debug/serial sessions; review agent results before integration.
 
-## Testing Guidelines
+## Project Layout and Commands
 
-Use PlatformIO Test Runner for new tests. Name test directories after the behavior or module, for example `test/test_gpio_blinky/`, and keep hardware-dependent tests clearly documented. There is currently no coverage requirement; every change should at minimum build successfully for each affected environment. For GPIO, clock, upload, or timing changes, report the board and programmer used for hardware verification.
+This is a CH32V203 PlatformIO `noneos-sdk` project. Application code is in `src/` (currently `main.c`), shared headers in `include/`, libraries in `lib/<name>/`, tests in `test/test_<behavior>/`, and settings in `platformio.ini`. Keep `.pio/` untracked.
 
-## Commit & Pull Request Guidelines
+Use [ch32v203-platformio](skills/ch32v203-platformio/SKILL.md) for CLI discovery and build/upload procedures. Examples: `pio run -e evt`, or all four environments with `pio run -e generic -e evt -e generic_isp -e evt_isp`. Authorized EVT upload uses `pio run -e evt -t upload`; USB ISP uses `evt_isp`. Always select the actual board explicitly. Embedded `pio test` may flash hardware; no host test environment is currently defined.
 
-Recent commits use short, lowercase, imperative summaries such as `add project` and `update gitignore`. Follow that style, keep commits focused, and avoid committing `.pio/` output. Pull requests should explain the behavior changed, list tested environments and commands, link related issues, and include serial logs or wiring notes when hardware behavior is relevant. Call out changes to pin assignments, clock configuration, or upload protocol explicitly.
+## Code and Verification
+
+New project code targets C++17 without exceptions, RTTI, or heap allocation; vendor SDK/stack code remains C. Preserve WCH ISR attributes and keep ISRs short. Use four-space indentation and existing local formatting; detailed C++ conventions remain O-21. Document every project function declaration with Doxygen. No formatter/linter is currently configured.
+
+Use PlatformIO Unity and [test plan](docs/test-plan.md). Target 90% branch coverage for protocol, transformation, configuration, and state-machine logic. Verify affected build environments; record hardware, firmware identity, logs, and measurements for HIL. Documentation-only work needs document/skill checks, not an unrelated firmware rebuild.
+
+## Documentation and Commits
+
+Maintain Japanese human-facing specifications as a coherent current description. On additions or removals, search related requirements, interfaces, tests, decisions, plans, and skills; rewrite affected sections as if the resulting design had always been present. Remove obsolete assertions and references. Keep historical evidence in the work log, decision rationale, and Git, not contradictory correction paragraphs in current specifications.
+
+Commit small, coherent, verified units frequently using short lowercase imperative messages such as `update development workflow`. Preserve unrelated user changes. PRs explain the outcome, requirements/issues, verification and remaining gaps, with logs or wiring notes where relevant. Installed skill copies must match their versioned originals.
