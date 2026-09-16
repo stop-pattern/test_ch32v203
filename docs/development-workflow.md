@@ -16,6 +16,7 @@ Goalツールとファイルは別の役割を持つ。ツールはgoalの稼働
 
 | 正本 | 保持する情報 | 更新方法 |
 |---|---|---|
+| [README](../README.md) / [AGENTS](../AGENTS.md) | 人間向け入口 / AI作業規則、共通のフォルダ配置契約 | 配置ブロックを同一内容に保ち、architecture/implementation-planと同時確認 |
 | [requirements.md](requirements.md) | What/Why、要求ID、対象範囲 | 現在の要求へ統合して書き直す |
 | [architecture.md](architecture.md) | 構成、責務、データフロー | 関連する説明と図を一緒に更新 |
 | [interface-spec.md](interface-spec.md) | 外部契約、型、値、タイミング、エラー | 旧契約を残した追記にしない |
