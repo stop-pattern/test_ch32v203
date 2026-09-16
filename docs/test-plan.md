@@ -52,6 +52,8 @@
 
 ## コマンドと実施記録
 
+2026-09-17のスキル環境整備で、既存点滅サンプルの4環境ビルドが成功した。Core版・サイズ・確認範囲は [tooling-environment.md](tooling-environment.md) に記録した。これは下記要求ベース試験の合格や実機検証ではない。日常のビルド・書き込み手順は [PlatformIOスキルの参照文書](../skills/ch32v203-platformio/references/build-upload.md) を参照する。
+
 既存のビルド確認コマンドは次のとおり。ホストUnity環境やcoverage設定はまだ存在しないため、それらの実行可能なコマンドは実装時に追加する。
 
 ```powershell
@@ -64,7 +66,7 @@ pio run -e generic -e evt -e generic_isp -e evt_isp
 & "${env:USERPROFILE}\.platformio\penv\Scripts\platformio.exe" run -e generic -e evt -e generic_isp -e evt_isp
 ```
 
-将来の結果には試験ID、コミット、ビルド設定、ボード、配線、マスター/BIDS版、測定器、手順、期待値、実測値、合否、ログ保存先を記録する。HIL未実施をホスト試験で代替合格としない。今回の文書化ではリンク・要求ID・未決参照・差分の確認のみを実施し、ファームウェアビルドや書込みは行わない。
+将来の結果には試験ID、コミット、ビルド設定、ボード、配線、マスター/BIDS版、測定器、手順、期待値、実測値、合否、ログ保存先を記録する。HIL未実施をホスト試験で代替合格としない。仕様初版の文書化ではリンク・要求ID・未決参照・差分のみを確認した。その後のツール環境確認は上記の別記録で管理する。
 
 ## 未決事項と合格判定
 
