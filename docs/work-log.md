@@ -7,7 +7,7 @@
 ### 開始と分担
 
 - 入力: ユーザーから、将来のgoalに向けた自律開発サイクル、細かな進捗のファイル保存、全文書の整合性、read-only調査と編集の積極的な並列分担を指示された。
-- 基準: `d0b0ca2`、開始時の作業ツリーはクリーン。Goalツールの照会結果は未設定。
+- 基準: `c30c0c9`、開始時の作業ツリーはクリーン。Goalツールの照会結果は未設定。
 - 調査: AGENTS、要求、実装計画、判断台帳、既存スキルを再読。古いC限定/coverage規定なし/AGENTS不変/委任非推奨の記述を統合対象とした。
 - 分担: `workflow_consistency`へread-onlyレビュー、`workflow_verification_docs`へtest-planとtooling-environmentのみの編集を委譲。親がその他の文書とGit操作を所有する。
 - 実機操作: なし。ファームウェアの実装開始を意味しない。
@@ -27,7 +27,7 @@
 ## 2026-09-17 / DOC-STYLE-01 / コーディング規約の照合
 
 - 入力: Google C++ Style Guide採用、4スペース、関数・クラス・構造体の宣言へのDoxygen必須、組み込み不要部分の除外。既存コードの適合化は後日とし、衝突点は採用する側を確認してから文書へ反映する指示。
-- 基準: `ab0dffb`、開始時の作業ツリーはクリーン。
+- 基準: `578d96f`、開始時の作業ツリーはクリーン。
 - 調査方法: Google公式ページを参照し、`rg`でAGENTS/docs/skillsと現コードの規約関連記述を検索。`coding_rules_audit`へ既存文書のread-only監査を委譲し、完了報告を受領した。
 - 外部根拠: [Google C++ Version](https://google.github.io/styleguide/cppguide.html#C++_Version)は現在C++20、[Self-contained Headers](https://google.github.io/styleguide/cppguide.html#Self_contained_Headers)は.hを指定。既存R-22等のC++17とarchitectureの設定ヘッダ.hppには採用判断が必要。
 - 文書上の競合: AGENTSの`existing local formatting`はGoogle基準へ整理が必要。O-21は命名・整形・コメントの詳細を未決としている。
@@ -52,7 +52,7 @@
 ## 2026-09-17 / DOC-README-01 / READMEと配置規約
 
 - 入力: 目的・機能以外の必要情報も含むREADME、理解しやすいフォルダ構造の定義、同じ内容のAGENTSへの記載とAIの遵守を指示された。
-- 基準: `1ea4b67`、開始時の作業ツリーはクリーン。
+- 基準: `8811d63`、開始時の作業ツリーはクリーン。
 - 調査: `rg --files`と既存文書を確認。README.md、config、機能別ソースサブフォルダは未作成。既存コードはsrc/main.cの点滅サンプルで、仕様の機能は未実装。
 - 分担: `workflow_consistency`へread-onlyで構成・README項目の確認を委譲。親が文書編集と統合を所有する。
 - 方針: 既存/計画/生成物を区別し、READMEとAGENTSに同一の配置規則を載せる。フォルダ移動や空の実装フォルダ作成は行わない。ルートconfigのビルド統合はP-02で行う。
@@ -66,10 +66,10 @@
 ## 2026-09-17 / DOC-PRIVACY-01 / 個人情報除外とコミット単位
 
 - 入力: 個人情報・機密情報をコミットへ含めず、ユーザー名入りフルパスや秘密鍵も除外する。意味ある最小作業単位で頻繁にコミットし、プロンプト境界とコミット境界を一致させる必要はない。
-- 基準: `d0d3f4b`、開始時の作業ツリーはクリーン。
+- 基準: `e204096`、開始時の作業ツリーはクリーン。
 - 調査・分担: 親が現行追跡ファイルのパターン検査、workflow_consistencyがread-onlyで記録規則の競合を確認。検出値を記録へ転載せず、ファイル/分類だけで扱う。
 - 保存単位1: test-plan/tooling-environment/work-logの個人パス6箇所を環境変数に置換。検証事実は保持し、履歴の機密除去が事実保存より優先する。過去のGit履歴自体は未変更。
-- 保存単位1の検証・結果: 現行追跡ファイルとステージ追加行で個人パス/鍵等の限定パターン候補なし、差分検査とコード/設定無変更確認は終了コード0。`d7a6f17`でコミットした。過去履歴に残る値は除去されていない。
+- 保存単位1の検証・結果: 現行追跡ファイルとステージ追加行で個人パス/鍵等の限定パターン候補なし、差分検査とコード/設定無変更確認は終了コード0。`1a42a05`でコミットした。過去履歴に残る値は除去されていない。
 - 保存単位2: AGENTS/README/運用規約/実装計画、R-28/R-32、T-25、D-32/D-38へ情報保護と最小コミット単位を統合。画像・メタデータ・スキル・名前・メッセージも検査対象とし、記録保存より匿名化を優先する。既存スキルは運用規約参照で整合し、変更不要。
 - 分担レビュー: 独立レビューで実装計画の「1プロンプトを1コミットへまとめず」が必ず複数への分割を要求するように読めると指摘され、作業の意味で区切る表現へ修正した。
 - 検証範囲: 現行追跡23ファイルを読み、個人パス、実環境ユーザー名、メールアドレス、鍵ヘッダ、代表的な認証文字列等を限定パターン検査し候補0。文脈レビューと合わせて確認したが、全形式の秘密や過去履歴を網羅するものではない。
@@ -84,3 +84,19 @@
 - 計画: リポジトリ外のユーザー領域に復旧bundleと隔離mirrorを作り、監査済みrefを全て書き換える。検証後に旧OID固定のforce-with-leaseで対象refだけを更新する。ローカル専用コミットは公開しない。
 - 安全条件: 置換はパスの匿名化と既存の実行例の引用符調整に限定し、作者情報、コード、設定、ブランチ名は変更しない。秘密値や個人パス、リモートURLを記録へ転載しない。バックアップは旧情報を含むためコミット/公開しない。
 - 限界: 通常refからの除去と、ホスティング側の到達不能object/キャッシュの完全消去を区別する。後者や他者clone/forkの清掃は自動で完了扱いにしない。
+
+### 実施結果
+
+- 復旧先: `${env:LOCALAPPDATA}/repo-history-cleanup-bc52cdc3514a436eab96ef1d225d5032/`。`before.bundle`は全ref/未pushコミットを含み検証成功。`clean.git/filter-repo/commit-map`に旧新対応、同領域のcheckpointに操作状態を保持する。bundle・置換規則・旧新対応は非公開の復旧資材であり、Git管理や共有先へアップロードしない。
+- 導入: 同領域のvenvにgit-filter-repo 2.47.0を導入。恒久PATH変更やグローバル導入なし。
+- 履歴監査: 全refの13コミット/68blob/33treeを検査し、個人フルパス1種類、11blob中21箇所を検出。実値は作業文書へ転載せず、隔離した置換規則へ限定した。
+- 書換え: ローカルのfresh mirrorで`--sensitive-data-removal --no-fetch --replace-text <規則> --replace-message <規則> --prune-empty never --prune-degenerate never`を使用。事前に広告refの取得状況を照合し、未push分を上書きする追加fetchを避けた。空コミットも残して作業単位/親子関係を保持した。
+- 限定性の検証: 変更はtest-plan/tooling-environment/work-logのパス匿名化とPowerShell引用符調整のみ。68組のblobが期待置換と一致し、作者・時刻・メッセージ・親関係・名前・モードに予期しない変更なし。既存GPG署名1件は履歴書換えに伴い除去された。最新treeは書換え前と同一。
+- リモート反映: push直前にも旧refを確認し、main/developそれぞれの旧OIDを固定したforce-with-leaseとatomic pushで更新成功。main=`a7a6ca3`、develop=`8811d63`。ローカル専用コミットは今回のpushへ含めず、ブランチ/タグの追加削除なし。
+- リモート検証: 独立mirrorへ再cloneし、広告refが期待値に一致。全到達可能9コミット/44blob/25treeで個人フルパス残存0、`git fsck --full`成功。これらは公開refの検証でありGitHub内部キャッシュの完全消去証明ではない。
+- ローカル同期: 新objectを取得し、各branch/remote-tracking refを旧OID照合付きトランザクションで更新。PowerShellの標準入力末尾改行で初回はcommit前に拒否され、変更なしを確認後、ASCII/LFバイトを明示して成功した。旧reflogを失効しGC後、全ref/reflogの13コミット/67blob/33treeで残存0、fsck成功。旧履歴の復旧はリポジトリ外bundleで可能。
+- 文書参照: 現行文書のコミットIDをcommit-mapで更新し、歴史上の検証対象を新しい対応コミットへ関連付けた。ファームウェアコード/設定/実機は変更していない。
+- 残る対応: 旧cloneからのmerge/pushを避けて再cloneする。GitHubの到達不能object・旧SHAキャッシュ・非広告refやforkの除去は所有者による確認/Support依頼が必要になり得る。今回は依頼や他者資産への操作を行っていない。
+- 公式手順: [git-filter-repo](https://github.com/newren/git-filter-repo)、[Git pushのlease/atomic](https://git-scm.com/docs/git-push)、[GitHubの機密データ除去](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/removing-sensitive-data-from-a-repository)。
+- 最終確認: 現行追跡23ファイルの限定パターン、15文書の相対リンク100件/アンカー/コードフェンス、README/AGENTS配置一致はエラー0。コード/ビルド設定無変更と差分形式検査に合格。read-only独立レビューも検証範囲と限界、未push分の保持、記録への個人パス再混入なしを確認した。
+- 保存単位: `record verified history cleanup`。完了記録はローカルへコミットし、今回のリモート更新には既存リモート先端の匿名化以外の変更を混ぜない。ビルド/実機操作は未実施。
