@@ -22,7 +22,7 @@ Use [ch32v203-platformio](skills/ch32v203-platformio/SKILL.md) for CLI discovery
 
 ## Code and Verification
 
-New project code targets C++17 without exceptions, RTTI, or heap allocation; vendor SDK/stack code remains C. Preserve WCH ISR attributes and keep ISRs short. Use four-space indentation and existing local formatting; detailed C++ conventions remain O-21. Document every project function declaration with Doxygen. No formatter/linter is currently configured.
+Follow [coding style](docs/coding-style.md): Google C++ Style Guide with C++20, four-space indentation, and `.cpp`/`.hpp` extensions. Every project function, class, and struct declaration requires Doxygen comments. Project firmware uses no exceptions, RTTI, or heap allocation; vendor SDK/stack code keeps its upstream C conventions. Preserve required ISR attributes, ABI names, and register operations at hardware boundaries. OS/thread-specific and Google-library adoption guidance is outside the firmware scope. Existing code cleanup is deferred; do not reformat or migrate it as part of this documentation work. C++20 toolchain compatibility is a future P-02/T-20 check; no formatter/linter is currently configured.
 
 Use PlatformIO Unity and [test plan](docs/test-plan.md). Target 90% branch coverage for protocol, transformation, configuration, and state-machine logic. Verify affected build environments; record hardware, firmware identity, logs, and measurements for HIL. Documentation-only work needs document/skill checks, not an unrelated firmware rebuild.
 

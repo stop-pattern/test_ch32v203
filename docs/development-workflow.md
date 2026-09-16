@@ -19,6 +19,7 @@ Goalツールとファイルは別の役割を持つ。ツールはgoalの稼働
 | [requirements.md](requirements.md) | What/Why、要求ID、対象範囲 | 現在の要求へ統合して書き直す |
 | [architecture.md](architecture.md) | 構成、責務、データフロー | 関連する説明と図を一緒に更新 |
 | [interface-spec.md](interface-spec.md) | 外部契約、型、値、タイミング、エラー | 旧契約を残した追記にしない |
+| [coding-style.md](coding-style.md) | Google基準、プロジェクト上書き、組み込み制約、移行方針 | 適用範囲・例外・検査方針を関連文書と同期 |
 | [test-plan.md](test-plan.md) | 要求に対応する試験と合格条件 | 追加/削除した要求と同期 |
 | [implementation-plan.md](implementation-plan.md) | 実装順序と依存関係 | 現在有効な計画として維持 |
 | [decisions.md](decisions.md) | 設計判断の理由、代替案、未決ID | 現行判断と過去判断の区別を明示 |
