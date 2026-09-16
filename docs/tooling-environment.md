@@ -4,7 +4,7 @@
 
 ## pioの利用可否
 
-環境整備時のPowerShellでは`Get-Command pio,platformio`で実行ファイルを解決できなかった。Coreはインストール済みで、以下のフルパスから起動・ビルドできることを確認した。作業再開時にはスキルのCLI検出手順で、その時点の環境を再確認する。
+環境整備時のPowerShellでは`Get-Command pio,platformio`で実行ファイルを解決できなかった。Coreはインストール済みで、ユーザー領域の実行ファイルから起動・ビルドできることを確認した。記録内の個人を含むパスは環境変数で表す。作業再開時にはスキルのCLI検出手順で、その時点の環境を再確認する。
 
 ```powershell
 & "${env:USERPROFILE}\.platformio\penv\Scripts\pio.exe" --version
