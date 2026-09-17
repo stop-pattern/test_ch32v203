@@ -16,7 +16,7 @@ BVE系鉄道シミュレータと操作器・表示器をつなぐ、CH32V203向
 | PC接続 | USB Device CDCでBIDSクライアントとしてテキスト/B64Eを処理 |
 | CAN接続 | Classical CANのCANopen slave、LSS、NMT、SDO、PDO、Heartbeat、EMCY |
 | 操作権 | GPIO選択またはUSB優先方針で操作経路を選び、監視と操作を分離 |
-| 変換 | 速度→PWM、ドア状態→DO、DI→Horn、ADC→ブレーキをデモとして構成 |
+| 変換 | 速度の絶対値→PWM、ドア状態→DO、DI→Horn、ADC→ブレーキ。PWM上限はUSB/CAN共通で比例調整 |
 | 設定・診断 | 揮発設定、入力フィルタ、通信監視、安全出力、LED/ログによる診断 |
 
 シミュレータ用途の試作を対象とします。負荷駆動回路、ESP32マスターのソフトウェア、CAN FD、Flashへの設定保存、独自更新ブートローダは今回の実装範囲に含めません。電気的な対象はMCUの3.3 V論理信号までです。ピン割当て等の検証待ちを含むため、接続前に [インターフェース仕様](docs/interface-spec.md) と [未決事項](docs/decisions.md#未決事項台帳) を確認してください。
