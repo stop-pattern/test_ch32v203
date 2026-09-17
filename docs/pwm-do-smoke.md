@@ -25,4 +25,6 @@
 
 ## 結果と限界
 
-実行結果は [work-log.md](work-log.md)、現在の状態は [progress.md](progress.md) を参照。書込み前のEVTビルドとホストUnity 2試験は成功した。書込みと実波形は別判定とし、未実施を合格にしない。ゲートウェイ全体のP-02完了や本体の要求ベース試験の合格も意味しない。
+2026-09-17、実装`25213d8`で全4環境ビルドとホストUnity 2試験が成功した。`pio run -e evt -t upload`は終了コード0で、Programming Finished / Verified OK / Resetting Targetを確認した。実行結果・成果物ハッシュは [work-log.md](work-log.md)、現在の状態は [progress.md](progress.md) を参照。
+
+PA0/PA3の実波形は測定器で未確認。書込みと実波形は別判定とし、未実施を合格にしない。ゲートウェイ全体のP-02完了や本体の要求ベース試験の合格も意味しない。

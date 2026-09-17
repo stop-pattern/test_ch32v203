@@ -206,3 +206,14 @@
 - コードレビュー完了: 重大/重要指摘なし。端点、初期化順序、APB1クロック、C ABI/IRQ、32-bit tick wrapを静的確認。実配線・時間・preload遅延は未測定で、ホスト試験やビルドから実波形を保証しない。
 - 全4環境ビルドは終了コード0。generic/generic_ispはFlash 2340 byte、evt/evt_ispは2408 byte、RAMは全環境2096 byte。ELFのDW_AT_producerから自作部gnu++20/例外RTTIなし、SDK C99を確認した。
 - 保存単位: `add pwm ramp and periodic digital output check`。実装・ホスト試験・専用試験仕様・README/AGENTS配置・本体との範囲区別を一緒に保存する。次に同じソースからevtのuploadを実行し、実際の成果物とverify/resetを確認する。
+
+### 実機書込みの結果
+
+- 実装保存: `25213d8`。保存前にステージ全27ファイルの個人パス/秘密鍵/代表的認証文字列を限定検査し候補なし。相対リンク108件、README/AGENTS配置一致、差分形式を確認。パターンだけで全形式の秘密の不存在を保証するものではない。
+- 直前確認: 作業ツリーはクリーン、WCH-LinkRVがStatus OK、競合するopenocd/wlink/wchispなし。対象は承認済みEVT、WCH-Link。追加のerase・保護解除・ドライバ更新なし。
+- コマンド: リポジトリルートから`pio run -e evt -t upload`（既存Coreを解決して実行）。終了コード0、所要約4.53秒。ターゲット接続成功、`Programming Finished`、`Verified OK`、`Resetting Target`、`shutdown command invoked`を確認した。
+- OpenOCDは既選択SDI transportの警告を出したが、その後のprogram/verify/resetは成功した。PowerShellがstderrの空行をRemoteException形式で表示した点は、コマンドの終了コード・成功確認と区別した。
+- 実際の書込み対象: `.pio/build/evt/firmware.elf`、SHA-256 `F038A84EB3F00C9FFC6F3E6BAF170D836511EBFCC802982F8883FBA1156343D4`。
+- 対応bin: `.pio/build/evt/firmware.bin`、SHA-256 `D6A2CDE29A6C0815B8FBCA0318591E64579E6034A3BC16B48B563C2647779075`。書込み前後でbinハッシュ一致。
+- 完了範囲: Codexからの実装・ビルド・EVT書込み/照合/リセットを確認。PA0/PA3の実波形は未測定であり、周期・端点・配線のHIL合格は主張しない。
+- 保存単位: `record verified evt pwm and do upload`。専用ブランチを保持し、developは`b839afa`のまま。merge/pushなし。レビューとuploadは終了、継続デバッグ接続なし。
