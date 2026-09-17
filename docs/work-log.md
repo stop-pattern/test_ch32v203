@@ -187,3 +187,22 @@
 - read-only確認: 既存Coreの`--version`で6.2.0、終了コード0。Windows PnPではWCH-LinkRVがStatus OK。機器固有IDや個人パスは保存しない。列挙はターゲット接続・書込みの成功を示さない。
 - 既存はPC1点滅のみ。genericはHSI、evtはHSEのため対象を推測しない。設計案は約1 kHz PWM、5秒で0→100%後に0へ戻すランプ、DOは1秒ごと反転。数値は今回の動作確認用の未承認提案。
 - 次: 設計案と接続基板/負荷条件を確認する。コード/設定変更、ビルド、uploadは未実施。本体全機能の実装開始へ範囲を拡張しない。
+
+### 承認・実装準備
+
+- ユーザーは提案を基本承認し、PA0を2秒上昇/2秒下降へ訂正した。DOの1秒反転、EVT R0/WCH-Link、出力可能な負荷条件は維持する。初期値はPWM 0%、DO Low。
+- test-driven-developmentで折返し・周期・DO境界を先に検証し、SDKのタイマ/クロック確認をpwm_sdk_auditへread-only委譲。実機とGitは親が単独所有する。
+- ホスト用MSVCを検出した。クロスコンパイラの初回探索名は実際のWCHツール名と異なり起動できなかったため、インストール済みbinを列挙して解決する。依存の追加導入や更新は行っていない。
+
+### 実装・書込み前検証
+
+- GCCはWCH版12.2.0。変更前のEVT Cサンプルは終了コード0、Flash 1428 byte/RAM 2076 byteでビルド成功。テスト配置を認識したPlatformIOがUnity 2.6.1を自動取得した（製品依存には追加していない）。
+- TDD: 独立時刻fixtureを先に作成し、出力0の最小実装で10件の期待した失敗を確認。三角波とDO計算の実装後は失敗0。取得されたUnityへ同じfixtureと全2000刻みの単調性確認を移し、2 Tests/0 Failures/0 Ignoredで合格した。
+- main.cをmain.cppへ置換し、C++20フラグを明示。波形計算だけを内部hppへ分離。PA0はTIM2、1 ms時刻はTIM3 IRQ、mainで位相・CCR・DOを更新。CPU時刻のuint32 wrapは差分で扱う。PC1点滅や製品通信は今回のプログラムに含めない。
+- SDK監査: EVTはHCLK 144 MHz/PCLK1 72 MHz、APB1タイマは144 MHz。TIM3初期化によるupdate pendingを解除してからIRQを有効化する。PWMはCCRのpreloadを使う。ARR=65534は確認用の0/100%端点を実現する専用設定で、本体ARR=65535の仕様確定を代替しない。
+- 初回C++20ビルドは成功したが上流core_riscv.hのvolatile複合代入に3警告。systematic-debuggingで原因箇所を確認し、上流無改変の制約に従ってSDK includeの範囲に限定した診断抑制を適用。再ビルドは警告なし、終了コード0、Flash 2408 byte/RAM 2096 byte。
+- ホストps1の直接起動は実行ポリシーで拒否された。子PowerShellだけのExecutionPolicy指定で実行し、恒久ポリシー変更なし。C++試験は/W4 /WXで合格。クロスELFではmain/TIM3/NMI/HardFaultのCシンボルを確認し、検索したmalloc/operator new/throwシンボルなし。
+- 書込み前bin SHA-256: `D6A2CDE29A6C0815B8FBCA0318591E64579E6034A3BC16B48B563C2647779075`。pwm_sdk_auditがread-onlyでコードをレビュー中。親が文書を同期し、レビュー後にコード保存・uploadへ進む。
+- コードレビュー完了: 重大/重要指摘なし。端点、初期化順序、APB1クロック、C ABI/IRQ、32-bit tick wrapを静的確認。実配線・時間・preload遅延は未測定で、ホスト試験やビルドから実波形を保証しない。
+- 全4環境ビルドは終了コード0。generic/generic_ispはFlash 2340 byte、evt/evt_ispは2408 byte、RAMは全環境2096 byte。ELFのDW_AT_producerから自作部gnu++20/例外RTTIなし、SDK C99を確認した。
+- 保存単位: `add pwm ramp and periodic digital output check`。実装・ホスト試験・専用試験仕様・README/AGENTS配置・本体との範囲区別を一緒に保存する。次に同じソースからevtのuploadを実行し、実際の成果物とverify/resetを確認する。

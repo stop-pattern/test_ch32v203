@@ -30,7 +30,8 @@ test_ch32v203/
 ├── platformio.ini            ビルド・ボード・書込み環境
 ├── LICENSE                   このリポジトリのライセンス
 ├── src/                      アプリケーション固有の実装
-│   ├── main.c                現在の点滅サンプル
+│   ├── main.cpp              PA0 PWM・PA3 DOの独立確認プログラム
+│   ├── smoke_waveform.hpp    確認用波形計算の内部ヘッダ
 │   ├── app/                  [計画] 起動・構成の組立て・協調実行
 │   ├── hal/                  [計画] ボード/SDK依存の周辺機能操作
 │   ├── io/                   [計画] DI/ADC取得・フィルタ・入力診断
@@ -42,7 +43,7 @@ test_ch32v203/
 ├── include/                  モジュール間で共有する自作ヘッダ
 ├── config/                   [計画] ビルド時の既定値・ボード設定
 ├── lib/                      再利用する独立ライブラリ
-├── test/                     試験（現在は案内READMEのみ）
+├── test/                     試験・ホスト用PWM/DO波形テスト
 ├── docs/                     仕様・設計・計画・進捗・検証記録
 ├── skills/                   スキルのGit管理原本
 ├── .vscode/                  エディタ設定（追跡対象は.gitignoreに従う）
@@ -69,13 +70,13 @@ test_ch32v203/
 
 1. ファイル作成前に責務から配置先を選ぶ。上記に収まらない新しい用途・トップレベルフォルダは、先に配置規則と関連設計を更新する。
 2. 自作C++は.cpp/.hppとし、宣言コメント・命名・書式はdocs/coding-style.mdに従う。上流ライブラリの配置・名前・書式をこの規則のために改変しない。
-3. 現在のsrc/main.cや既存ファイルを文書整備だけで移動・改名しない。計画フォルダは必要な実装を追加するときに作り、空フォルダや仮コードだけを先行作成しない。
+3. 現在のsrc/main.cppや既存ファイルを文書整備だけで移動・改名しない。計画フォルダは必要な実装を追加するときに作り、空フォルダや仮コードだけを先行作成しない。
 4. ルートconfigのヘッダ検索パスと、各ライブラリのビルド統合はP-02で明示設定・検証する。フォルダを作ればPlatformIOがすべて自動認識するとは仮定しない。
 5. include/lib/test内の既存READMEはPlatformIOの初期案内であり、この配置規則や現在のC++規約より優先しない。
 6. README.mdとAGENTS.mdのこの配置ブロックは同一内容を維持する。変更時は両方とarchitecture/implementation-planへの影響を同じ変更単位で確認する。
 <!-- END REPOSITORY LAYOUT -->
 
-Use [ch32v203-platformio](skills/ch32v203-platformio/SKILL.md) for CLI discovery and build/upload procedures. Examples: `pio run -e evt`, or all four environments with `pio run -e generic -e evt -e generic_isp -e evt_isp`. Authorized EVT upload uses `pio run -e evt -t upload`; USB ISP uses `evt_isp`. Always select the actual board explicitly. Embedded `pio test` may flash hardware; no host test environment is currently defined.
+Use [ch32v203-platformio](skills/ch32v203-platformio/SKILL.md) for CLI discovery and build/upload procedures. Examples: `pio run -e evt`, or all four environments with `pio run -e generic -e evt -e generic_isp -e evt_isp`. Authorized EVT upload uses `pio run -e evt -t upload`; USB ISP uses `evt_isp`. Always select the actual board explicitly. Embedded `pio test` may flash hardware; no PlatformIO host environment is defined. The isolated PWM/DO check has a Windows/MSVC Unity runner under `test/test_pwm_do_smoke/`; see [its scope and commands](docs/pwm-do-smoke.md).
 
 ## Code and Verification
 

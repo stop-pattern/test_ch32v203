@@ -1,6 +1,6 @@
 # アーキテクチャ設計
 
-記録日: 2026-09-17。状態: 合意済み方針と設計案の記録／未実装。
+記録日: 2026-09-17。状態: 本体の合意済み方針と設計案／未実装。独立した [PWM/DO確認](pwm-do-smoke.md) は本設計の実装とは区別する。
 
 要求の正本は [requirements.md](requirements.md)、外部契約は [interface-spec.md](interface-spec.md)、判断の根拠と未決台帳は [decisions.md](decisions.md) とする。以下のモジュール名は責務を示す設計上の名称で、作成済みのファイルや確定済みAPI名ではない。
 
@@ -42,7 +42,7 @@ CANopenマスターは別のESP32系プロジェクトの供給待ちとし、�
 
 配置規則は [README](../README.md) と [AGENTS](../AGENTS.md) の同一ブロックを正本とする。Board/HALは`src/hal/`、入力取得は`src/io/`、BIDSとCANopenの処理は`src/protocol/bids/`と`src/protocol/canopen/`へ置く。USB/CAN低層ドライバはhal、フレーミングやスタック接続はprotocolに分ける。経路選択・変換・実行時設定・安全出力の調停は`src/control/`、診断は`src/diagnostics/`、初期化の組立てとSchedulerは`src/app/`が担当する。
 
-共有宣言は`include/<module>/`、内部ヘッダは対応するsrc配下、独立再利用ライブラリは`lib/<library_name>/`へ置く。これらの機能別フォルダは計画上の配置先であり、現在の`src/main.c`を移動したり、空の実装を作ったりする指示ではない。具体的なAPI・ファイル分割は未決事項の解消後に設計する。
+共有宣言は`include/<module>/`、内部ヘッダは対応するsrc配下、独立再利用ライブラリは`lib/<library_name>/`へ置く。これらの機能別フォルダは計画上の配置先であり、確認用の`src/main.cpp`を移動したり、空の実装を作ったりする指示ではない。具体的なAPI・ファイル分割は未決事項の解消後に設計する。
 
 ## 実行モデルとデータフロー
 

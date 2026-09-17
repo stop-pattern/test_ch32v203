@@ -1,6 +1,6 @@
 # 実装順序と依存関係
 
-更新日: 2026-09-17。ファームウェアは仕様策定段階で、機能実装は未開始。現在の作業と完了状況は [progress.md](progress.md)、開発の運用規約は [development-workflow.md](development-workflow.md) を参照する。
+更新日: 2026-09-17。本体ファームウェアは仕様策定段階で、機能実装は未開始。別途承認された [PWM/DO確認](pwm-do-smoke.md) は限定実装であり、本体P-02以降の完了とは区別する。現在の作業と完了状況は [progress.md](progress.md)、開発の運用規約は [development-workflow.md](development-workflow.md) を参照する。
 
 要求は [requirements.md](requirements.md)、責務は [architecture.md](architecture.md)、外部契約は [interface-spec.md](interface-spec.md)、検証は [test-plan.md](test-plan.md)、判断・未決は [decisions.md](decisions.md) を参照する。
 
