@@ -100,3 +100,11 @@
 - 公式手順: [git-filter-repo](https://github.com/newren/git-filter-repo)、[Git pushのlease/atomic](https://git-scm.com/docs/git-push)、[GitHubの機密データ除去](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/removing-sensitive-data-from-a-repository)。
 - 最終確認: 現行追跡23ファイルの限定パターン、15文書の相対リンク100件/アンカー/コードフェンス、README/AGENTS配置一致はエラー0。コード/ビルド設定無変更と差分形式検査に合格。read-only独立レビューも検証範囲と限界、未push分の保持、記録への個人パス再混入なしを確認した。
 - 保存単位: `record verified history cleanup`。完了記録はローカルへコミットし、今回のリモート更新には既存リモート先端の匿名化以外の変更を混ぜない。ビルド/実機操作は未実施。
+
+## 2026-09-17 / PUSH-VERIFY-01 / 最新developの再push確認
+
+- 入力: ユーザーが再度`push -f`し結果を確認するよう指示した。
+- 事前確認: 作業ツリーはクリーン、現在ブランチはdevelop。リモートdevelop=`8811d63`、ローカルHEAD=`6e55740`で5コミット先行。前回の匿名化は反映済みだが、README・運用規則・完了記録等は未公開だった。
+- 操作: `git push -f origin HEAD:refs/heads/develop`。終了コード0、`8811d63..6e55740 HEAD -> develop`。明示refspecでdevelopだけを対象とし、mainやタグは変更しない。
+- 検証: `git rev-parse HEAD`と`git ls-remote --heads origin refs/heads/develop refs/heads/main`を照合。developは`6e557405566aabd1fef1021493d455cd1a2ad2e0`で一致、mainは`a7a6ca3`のまま。確認時点の作業ツリーはクリーン。
+- 保存単位: `record successful develop push verification`。この確認記録をコミット後、同じdevelopへpushし、最終HEADとの一致も再確認する。コード/設定/実機は変更せず、公開ref以外のキャッシュ等の限界は前回記録どおり。
