@@ -108,3 +108,12 @@
 - 操作: `git push -f origin HEAD:refs/heads/develop`。終了コード0、`8811d63..6e55740 HEAD -> develop`。明示refspecでdevelopだけを対象とし、mainやタグは変更しない。
 - 検証: `git rev-parse HEAD`と`git ls-remote --heads origin refs/heads/develop refs/heads/main`を照合。developは`6e557405566aabd1fef1021493d455cd1a2ad2e0`で一致、mainは`a7a6ca3`のまま。確認時点の作業ツリーはクリーン。
 - 保存単位: `record successful develop push verification`。この確認記録をコミット後、同じdevelopへpushし、最終HEADとの一致も再確認する。コード/設定/実機は変更せず、公開ref以外のキャッシュ等の限界は前回記録どおり。
+
+## 2026-09-17 / SPEC-DIALOG-01 / 未決仕様の対話整理
+
+- 入力: 未確定事項を対話で確認し、回答可能な内容は関連文書へ反映する。回答できない項目は未決のまま、不要項目は不要として再整理する。
+- 基準: `c6cf041`、開始時の作業ツリーはクリーン。未決台帳O-01～O-21と要求・インターフェース・設計を再読した。
+- 分担: workflow_consistencyへ用途判断/技術的調査の分類と質問順のread-only検討を委譲。親が質問、文書反映、進捗、Git操作を担当する。
+- 第1問: O-06の非選択CAN異常の適用範囲。USB/BIDSで正常に操作中、CAN bus-off/NMT離脱/マスター通信断でもDO/PWMを継続するか、安全値へ移行するかを確認する。保留・不要・別案も受け付け、事象別タイミング・復帰条件は部分回答だけで確定しない。
+- 状態: 回答待ち、要求や未決台帳の内容は未変更。質問と再開手順だけをprogressへ保存した。実装・ビルド・実機操作は開始しない。
+- 分担結果: 各O-IDには用途判断と技術調査が混在すると確認。非選択経路の影響、PWM上限の運転中反映、障害復帰時の再開方法を優先候補とした。NMTの管理状態を必ず異常とは見なさず、停止と通信故障を区別して質問する。
